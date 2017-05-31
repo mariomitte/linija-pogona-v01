@@ -1,72 +1,108 @@
-from rest_framework import viewsets
-from pogon.models import Operater
-from pogon.serializers import OperaterSerializer
-from rest_framework.permissions import IsAuthenticated
-from rest_framework.response import Response
-from rest_framework.views import APIView
+# -*- coding: utf-8 -*-
+from __future__ import unicode_literals
 
-from . import permissions
-from . import serializers
+from django.contrib.auth import authenticate, login
+from django.contrib.auth import logout
+from django.shortcuts import render, get_object_or_404
+from django.template.loader import get_template
 
-# Django rest_framework API response
-class PogonApiView(APIView):
-    """Test API View."""
+from .models import Operater
+from .forms import UserForm
+#from wiPiBotClient import *
 
-    # dodaj serializers varijablu i referenciraj ju
-    serializers_class = serializers.OperaterSerializer
+FORMAT_ZA_SLIKE = ['png', 'jpg', 'jpeg']
 
-    def get(self, request, format=None):
-        """Returns a list of APIView features."""
+def gosti(request):
+    return render(request, 'pogon/gosti.html')
 
-        an_apiview = [
-            'Uses HTTP methods as function (get, post, patch, put, delete)',
-            'It is similar to a traditional Django view',
-            'Gives you the most control over your logic',
-            'Is mapped manually to URLs'
-        ]
+def ploca(request):
+    if not request.user.is_authenticated():
+        return render(request, 'pogon/gosti.html')
+    else:
+        return render(request, 'pogon/uprav_ploca.html')
 
-        return Response({'message': 'Hello!', 'an_apiview': an_apiview})
+def dokumentacija(request):
+    if not request.user.is_authenticated():
+        return render(request, 'pogon/gosti.html')
+    else:
+        return render(request, 'pogon/dokumentacija.html')
 
-    # metoda za POST response
-    def post(self, request):
-        """Create a hello message with our name."""
+def formular(request, operater_id):
+    if not request.user.is_authenticated():
+        return render(request, 'pogon/gosti.html')
+    else:
+        return render(request, 'pogon/parametri.html')
 
-        serializer = serializers.HelloSerializer(data=request.data) # što god da request ima pošalji serializer objektu
+def detaljno(request):
+    if not request.user.is_authenticated():
+        return render(request, 'pogon/gosti.html')
+    else:
+        return render(request, 'pogon/detaljno.html')
 
-        # provjeri da serializer ima ispravni data
-        if serializer.is_valid():
-            name = serializer.data.get('name')
-            message = 'Hello {0}'.format(name) # {0, 1, 2} to je red po kojemu želim izlistati message koji je upisao korisnik
-            return Response({'message': message})
-
+def prijava(request):
+    if request.method == "POST":
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            if user.is_active:
+                login(request, user)
+                operater = Operater.objects.filter(kreirao=request.user)
+                return render(request, 'pogon/uprav_ploca.html', {'operater': operater})
+            else:
+                return render(request, 'pogon/login.html', {'error_message': 'Tvoj račun je blokiran od strane administratora'})
         else:
-            return Response(
-                serializer.errors, status=status.HTTP_400_BAD_REQUEST) # sadrži lista grešaka koji nastanu
+            return render(request, 'pogon/login.html', {'error_message': 'Neispravni korisnički podaci'})
+    return render(request, 'pogon/login.html')
 
-    # Http response
-    def put (self, request, pk=None):
-        """Handles updating object."""
+def odjava(request):
+    logout(request)
+    form = UserForm(request.POST or None)
+    context = {
+        "form": form,
+    }
+    return render(request, 'pogon/gosti.html', context)
 
-        return Response({'method': 'put'})
+'''
+# Upravljačka ploča
+def dashboard(request):
+    # used to keep track when buttons are pressed twice.
+    # you keep in cruise mode
 
-    # Partialy update object
-    def patch(self, request, pk=None):
-        """Patch request, only updates fields provided in the request."""
+    t = get_template('dashboard.html')
 
-        return Response({'method': 'patch'})
+    if 'cmd' in request.GET and request.GET['cmd']:
+        cmd = request.GET['cmd']
 
-    def delete(self, request, pk=None):
-        """Delete an object."""
+        if cmd == 'led':
+            blink()
 
-        return Response({'method':'delete'})
+        # Dodao "pause" da bude enA i enB = 0
+        if (cmd == 'pause'):
+            speed_control(cmd)
 
-class OperaterViewSet(viewsets.ModelViewSet):
-    queryset = Operater.objects.all()
-    serializer_class = OperaterSerializer
-    permission_classes = (IsAuthenticated,)
+        if (cmd == 'up') or (cmd == 'down'):
+            speed_control(cmd)
 
-    def get(self, request, format=None):
-        content = {
-            'status': 'request was permitted'
-        }
-        return Response(content)
+        if cmd == 'record':
+            camera.record()
+
+        if cmd == 'stop-record':
+            camera.stop()
+
+        if cmd == 'take-photo':
+            camera.photo()
+
+        if cmd == 'motor-stol':
+            motor_select(cmd)
+
+        if cmd == 'motor-goredolje':
+            motor_select(cmd)
+
+        if cmd == 'motor-obrada':
+            motor_select(cmd)
+
+        motor_control(cmd)
+
+    return HttpResponse(t.render())
+'''

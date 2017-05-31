@@ -15,6 +15,7 @@ import os
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+CLIENT_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
@@ -40,6 +41,10 @@ INSTALLED_APPS = [
     'rest_framework',
     'api',
     'pogon',
+    'bootstrap3',
+    'pyowm',
+    'chartjs',
+    'svg',
 ]
 
 MIDDLEWARE = [
@@ -54,12 +59,14 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'urls'
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'client/media')
+MEDIA_ROOT = os.path.join(CLIENT_DIR, 'client/media')
+
+STATICFILES_DIRS = [os.path.join(CLIENT_DIR, 'client/static')]
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'client/templates')],
+        'DIRS': [os.path.join(CLIENT_DIR, 'client/templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
