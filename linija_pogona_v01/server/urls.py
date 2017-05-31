@@ -29,6 +29,9 @@ urlpatterns = [
 
     # /linija/
     url(r'^pogon/', include('pogon.urls')),
+
+    # /api/
+    url(r'^api/', include('api.urls')),
 ]
 
 if settings.DEBUG:
