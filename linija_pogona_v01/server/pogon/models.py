@@ -13,3 +13,7 @@ class Operater(models.Model):
 
     def __unicode__(self):
         return self.nalog + ' - ' + self.sifra
+
+class Pwm(models.Model):
+    period = models.DecimalField(max_digits=4, decimal_places=2, blank=True, null=True)
+    sirina = models.DecimalField(max_digits=4, decimal_places=2, blank=True, null=True)

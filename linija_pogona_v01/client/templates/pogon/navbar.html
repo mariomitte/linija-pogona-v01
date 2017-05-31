@@ -18,8 +18,8 @@
                         <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>  Upravljačka ploča </a>
                 </li>
                 <li>
-                    <a href="{% url 'pogon:formular' %}">
-                        <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>  Formular </a>
+                    <a href="{% url 'pogon:parametri' %}">
+                        <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>  Parametri </a>
                 </li>
                 <li>
                     <a href="{% url 'pogon:dokumentacija' %}">
@@ -27,10 +27,6 @@
                 </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li>
-                    <a href="{% url 'pogon:detaljno' %}">
-                        <span class="glyphicon glyphicon-lock" aria-hidden="true"></span>  {{ user.username }}  </a>
-                </li>
                 <li>
                     <a href="{% url 'pogon:odjava' %}">
                         <span class="glyphicon glyphicon-off" aria-hidden="true"></span>

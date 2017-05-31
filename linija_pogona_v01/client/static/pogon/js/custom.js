@@ -84,9 +84,9 @@ function clear() {
 }
 
 function motor_stol() {
-  document.getElementById("modal-stol").style.backgroundColor = '#5cb85c';
-  document.getElementById("modal-goredolje").style.backgroundColor = '#ffffff';
-  document.getElementById("modal-obrada").style.backgroundColor = '#ffffff';
+  document.getElementById("signali-stol").style.backgroundColor = '#5cb85c';
+  document.getElementById("signali-goredolje").style.backgroundColor = '#ffffff';
+  document.getElementById("signali-obrada").style.backgroundColor = '#ffffff';
   document.getElementById("signali-stol").style.backgroundColor = '#5cb85c';
   document.getElementById('rucno_motor').innerHTML = 'Motor - Stol';
   var xhttp = new XMLHttpRequest();
@@ -95,9 +95,9 @@ function motor_stol() {
 }
 
 function motor_goredolje() {
-  document.getElementById("modal-stol").style.backgroundColor = '#ffffff';
-  document.getElementById("modal-goredolje").style.backgroundColor = '#5cb85c';
-  document.getElementById("modal-obrada").style.backgroundColor = '#ffffff';
+  document.getElementById("signali-stol").style.backgroundColor = '#ffffff';
+  document.getElementById("signali-goredolje").style.backgroundColor = '#5cb85c';
+  document.getElementById("signali-obrada").style.backgroundColor = '#ffffff';
   document.getElementById("signali-gore").style.backgroundColor = '#e9b96e';
   document.getElementById("signali-dolje").style.backgroundColor = '#e9b96e';
   document.getElementById('rucno_motor').innerHTML = 'Motor - Gore/Dolje';
@@ -107,9 +107,9 @@ function motor_goredolje() {
 }
 
 function motor_obrada() {
-  document.getElementById("modal-stol").style.backgroundColor = '#ffffff';
-  document.getElementById("modal-goredolje").style.backgroundColor = '#ffffff';
-  document.getElementById("modal-obrada").style.backgroundColor = '#5cb85c';
+  document.getElementById("signali-stol").style.backgroundColor = '#ffffff';
+  document.getElementById("signali-goredolje").style.backgroundColor = '#ffffff';
+  document.getElementById("signali-obrada").style.backgroundColor = '#5cb85c';
   document.getElementById("signali-obrada").style.backgroundColor = '#5cb85c';
   document.getElementById('rucno_motor').innerHTML = 'Motor - Obrada';
   var xhttp = new XMLHttpRequest();

@@ -17,13 +17,11 @@
 </head>
 <body>
 {% include "pogon/navbar.html" %}
-{% block messages %}
-    {% if messages %}
-        {% for message in messages %}
-        <div class="alert-message{% if message.tags %} {{ message.tags }}{% endif %}">{{ message }}</div>
-        {% endfor %}
-    {% endif %}
-{% endblock %}
+<div class="row">
+  {% if error_message %}
+      <p><strong>{{ error_message }}</strong></p>
+  {% endif %}
+</div>
 {% block body %}
 {% endblock %}
 </body>

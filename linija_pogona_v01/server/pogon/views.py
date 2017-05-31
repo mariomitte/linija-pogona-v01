@@ -3,11 +3,11 @@ from __future__ import unicode_literals
 
 from django.contrib.auth import authenticate, login
 from django.contrib.auth import logout
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import redirect, render, get_object_or_404
 from django.template.loader import get_template
 
-from .models import Operater
-from .forms import UserForm
+from .models import Operater, Pwm
+from .forms import OperaterForm, PwmForm
 #from wiPiBotClient import *
 
 FORMAT_ZA_SLIKE = ['png', 'jpg', 'jpeg']
@@ -27,17 +27,24 @@ def dokumentacija(request):
     else:
         return render(request, 'pogon/dokumentacija.html')
 
-def formular(request, operater_id):
+def parametri(request):
     if not request.user.is_authenticated():
-        return render(request, 'pogon/gosti.html')
+        return render(request, 'pogon/login.html')
     else:
-        return render(request, 'pogon/parametri.html')
-
-def detaljno(request):
-    if not request.user.is_authenticated():
-        return render(request, 'pogon/gosti.html')
-    else:
-        return render(request, 'pogon/detaljno.html')
+        form = PwmForm()
+        if request.method == 'POST':
+            form = PwmForm(request.POST)
+            if form.is_valid():
+                context = {
+                    'form':form,
+                }
+                form.save()
+                return render(request, 'pogon/parametri.html', context)
+        else:
+            context = {
+                'form':form
+            }
+    return render(request, 'pogon/parametri.html', context)
 
 def prijava(request):
     if request.method == "POST":
@@ -47,17 +54,17 @@ def prijava(request):
         if user is not None:
             if user.is_active:
                 login(request, user)
-                operater = Operater.objects.filter(kreirao=request.user)
-                return render(request, 'pogon/uprav_ploca.html', {'operater': operater})
+                obj = Operater.objects.filter(kreirao=request.user)
+                return render(request, 'pogon/uprav_ploca.html', {'ispitivanje': obj})
             else:
-                return render(request, 'pogon/login.html', {'error_message': 'Tvoj račun je blokiran od strane administratora'})
+                return render(request, 'pogon/gosti.html', {'error_message': 'Tvoj račun je blokiran od strane administratora'})
         else:
             return render(request, 'pogon/login.html', {'error_message': 'Neispravni korisnički podaci'})
     return render(request, 'pogon/login.html')
 
 def odjava(request):
     logout(request)
-    form = UserForm(request.POST or None)
+    form = OperaterForm(request.POST or None)
     context = {
         "form": form,
     }
