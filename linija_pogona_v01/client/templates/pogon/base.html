@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+
+<html{% if LANGUAGE_CODE %} lang="{{ LANGUAGE_CODE }}"{% endif %}>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Operater - {% block title %}Naslovna{% endblock %}</title>
+    {% load static %}
+    <link rel="shortcut icon" type="image/png" href="{%  static 'favicon.ico' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'linija/css/style.css' %}"/>
+    {% load bootstrap3 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript jquery=1 %}
+    {% bootstrap_messages %}
+</head>
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+
+        <!-- Ukratko -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#topNavBar">
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="{% url 'linija:gosti' %}">LINIJA  </a>
+        </div>
+
+        <!-- Sadrzaj -->
+        <div class="collapse navbar-collapse" id="topNavBar">
+            {% if user.is_authenticated %}
+            <ul class="nav navbar-nav navbar-left">
+                <li>
+                    <a href="{% url 'linija:ploca' %}">
+                        <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>  Upravljačka ploča </a>
+                </li>
+                <li>
+                    <a href="{% url 'linija:formular' %}">
+                        <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>  Formular </a>
+                </li>
+                <li>
+                    <a href="{% url 'linija:dokumentacija' %}">
+                        <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>  Dokumentacija </a>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="{% url 'linija:detaljno' %}">
+                        <span class="glyphicon glyphicon-lock" aria-hidden="true"></span>  {{ user.username }}  </a>
+                </li>
+                <li>
+                    <a href="{% url 'linija:odjava' %}">
+                        <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
+                    </a>
+                </li>
+            </ul>
+            {% else %}
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="{% url 'linija:prijava' %}">
+                            <span class="glyphicon glyphicon-lock" aria-hidden="true"></span> Prijavi se
+                        </a>
+                    </li>
+                </ul>
+            {% endif %}
+        </div>
+
+    </div>
+</nav>
+{% block messages %}
+    {% if messages %}
+        {% for message in messages %}
+        <div class="alert-message{% if message.tags %} {{ message.tags }}{% endif %}">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+{% endblock %}
+{% block body %}
+{% endblock %}
+</body>
+</html>

@@ -1,0 +1,123 @@
+{% extends 'linija/base.html' %}
+
+{% load staticfiles svg %}
+
+{% block title %}{{ user.username }} upravlja{% endblock %}
+
+{% block body %}
+<!-- Signali -->
+<div id="signali" class="container col-md-1">
+    <div class="page-header col-sm-9 col-sm-offset-2 col-md-10 col-md-offset-2 main">
+
+          <div class="row placeholders">
+            <div class="col-xs-2 col-sm-1 placeholder">
+              <div id="signali-gore" width="100" height="100" class="img-responsive">{% svg 'SUN' %}</div>
+              <h4>Gore</h4>
+              <span class="text-muted">Something else</span>
+            </div>
+            <div class="col-xs-2 col-sm-1 placeholder">
+              <div id="signali-dolje" width="100" height="100" class="img-responsive">{% svg 'SUN' %}</div>
+              <h4>Dolje</h4>
+              <span class="text-muted">Something else</span>
+            </div>
+            <div class="col-xs-2 col-sm-1 placeholder">
+              <div id="signali-stol" width="100" height="100" class="img-responsive">{% svg 'SUN' %}</div>
+              <h4>Stol</h4>
+              <span class="text-muted">Something else</span>
+            </div>
+            <div class="col-xs-2 col-sm-1 placeholder">
+              <div id="signali-obrada" width="100" height="100" class="img-responsive">{% svg 'SUN' %}</div>
+              <h4>Obrada</h4>
+              <span class="text-muted">Something else</span>
+            </div>
+            <div class="col-xs-2 col-sm-1 placeholder">
+              <div id="signali-ciklus" width="100" height="100" class="img-responsive">{% svg 'SUN' %}</div>
+              <h4>Ciklus</h4>
+              <span class="text-muted">Something else</span>
+            </div>
+          </div>
+    </div>
+</div>
+<!-- Rucno -->
+<div id="rucno" class="col-md-7">
+    <div class="col-md-offset-2 main">
+        <h1 id="rucno_motor" class="page-header">Ručno</h1>
+        <div class="row placeholders">
+
+            <div class="container-fluid">
+                <div class="row">
+                 <div class="col-xs-2 col-sm-2 kamera"></div>
+                  <a class="col-xs-2 col-sm-2 kamera btn btn-default btn-mv" style="transform: rotate(270deg);"><object onclick="speed_up();">{% svg 'ARROW' %}</object></a>
+                 <div class="col-xs-2 col-sm-2 kamera"></div>
+                 <a class="col-xs-2 col-sm-2 kamera btn btn-default btn-mv"><object onclick="stop_linija();">{% svg 'POWER' %}</object></a>
+                </div>
+                <div class="row">
+                 <a class="col-xs-2 col-sm-2 kamera btn btn-default btn-mv" style="transform: rotate(180deg);"><object onclick="left();">{% svg 'ARROW' %}</object></a>
+                 <a class="col-xs-2 col-sm-2 kamera btn btn-default btn-mv stop"><object onclick="pause();">{% svg 'PAUSE' %}</object></a>
+                 <a class="col-xs-2 col-sm-2 kamera btn btn-default btn-mv" style="transform: rotate(0deg);"><object onclick="right();">{% svg 'ARROW' %}</object></a>
+                 <!-- s -->
+
+                 <!-- image trigger modal -->
+<a data-target="#myModal" data-toggle="modal" role="button" class="col-xs-2 col-sm-2 kamera btn btn-default btn-mv">{% svg 'SETTINGS' %}</a>
+                 <!-- Modal HTML -->
+
+                <div id="myModal" class="modal fade">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                <h4 class="modal-title">Odabir motora linije</h4>
+                            </div>
+                            <div class="modal-body">
+                                <div id="modal-stol"><a onclick="motor_stol();">Motor - Stol</a></div>
+                                <div id="modal-goredolje"><a onclick="motor_goredolje();">Motor - Gore/Dolje</a></div>
+                                <div id="modal-obrada"><a onclick="motor_obrada();">Motor - Obrada</a></div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary" data-dismiss="modal">Zatvori</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                 <!-- s -->
+                </div>
+                <div class="row">
+                 <div class="col-xs-2 col-sm-2 kamera"></div>
+                 <a class="col-xs-2 col-sm-2 kamera btn btn-default btn-mv" style="transform: rotate(90deg);"><object onclick="speed_down();">{% svg 'ARROW' %}</object></a>
+                 <div class="col-xs-2 col-sm-2 kamera"></div>
+                 <a class="col-xs-2 col-sm-2 kamera btn btn-default btn-mv"><object onclick="send_mail();">{% svg 'MAIL' %}</object></a>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div> <!-- End Rucno -->
+<!-- Kamera -->
+<div id="kamera" class="container col-md-4">
+    <div class="col-sm-9 col-sm-offset-2 col-md-10 main">
+        <h1 class="page-header">Kamera</h1>
+        <div class="row placeholders">
+            <a class="col-xs-2 col-sm-2 kamera start btn btn-default btn-mv"><object onclick="record();">{% svg 'PLAY' %}</object></a>
+            <a class="col-xs-2 col-sm-2 kamera start btn btn-default btn-mv stop"><object onclick="stop_record();">{% svg 'STOP' %}</object></a>
+            <a class="col-xs-2 col-sm-2 kamera uslikaj btn btn-default btn-mv"><object onclick="take_photo();">{% svg 'CAMERA' %}</object></a>
+        </div>
+    </div>
+</div> <!-- End Kamera -->
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="{% static 'linija/js/jquery.min.js' %}><\/script>')</script>
+<script src="{% static 'linija/js/bootstrap.min.js' %}"></script>
+<!-- Kamera -->
+<script src="{% static 'linija/js/custom.js' %}"></script>
+<!-- Menu Toggle Script -->
+<script>
+$("#menu-toggle").click(function(e) {
+    e.preventDefault();
+    $("#wrapper").toggleClass("toggled");
+});
+</script>
+{% endblock %}

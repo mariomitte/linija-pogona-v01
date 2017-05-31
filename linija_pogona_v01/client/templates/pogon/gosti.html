@@ -1,0 +1,23 @@
+{% extends 'linija/base.html' %}
+
+{% load staticfiles %}
+
+{% block title %}Dobrodošli{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <h4>Prvi red: Veliki header slika do stranice sa uputstvima</h4>
+            <h4>Drugi red: Veliki header slika do stranice za liniju pogona</h4>
+            <h4>Treći red: Veliki header slika do stranice za unos formulara i simulaciju PI, PID</h4>
+            <h4>Četvrti red: Veliki header slika do stranice za izvor korištene literature</h4>
+        </div>
+    </div>
+    <div class="my-fluid-container">
+        <div class="col-lg-offset-1 col-lg-10">
+            <div class="wide">
+                <img src="{{ MEDIA_URL }}/media/free.jpg" class="img canvas btn btn-mv"></img>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,59 @@
+{% extends 'linija/base.html' %}
+
+{% block title %}Unos novi parametara{% endblock %}
+
+{% block body %}
+<div class="panel panel-default">
+    <div class="row">
+        <div class="container-fluid filter-menu">
+            <div class="panel-body row">
+                <div class="col-xs-10 col-sm-3 col-md-2">
+                    {% if error_message %}
+                        <p><strong>{{ error_message }}</strong></p>
+                    {% endif %}
+                    <div class="form-group col-xs-3 col-sm-3 col-md-2">
+                        <form class="form-group" role="form" action="" method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="col-xs-12 col-sm-12 col-md-12">
+                                <input type="hidden" name="nalog" value="{{ question_form }}">
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-12">
+                                <div class="form-group">
+                                    <div class="col-sm-offset-2 col-sm-10">
+                                        <button type="submit" class="btn btn-success">Spremi</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-xs-3 col-sm-3 col-md-2">
+                    {% if error_message %}
+                        <p><strong>{{ error_message }}</strong></p>
+                    {% endif %}
+                    <div class="form-group col-xs-3 col-sm-3 col-md-2">
+                        <form class="form-group" role="form" action="" method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="col-xs-12 col-sm-12 col-md-12">
+                                <input type="hidden" name="nalog" value="{{ answer_form }}">
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-12">
+                                <div class="form-group">
+                                    <div class="col-sm-offset-2 col-sm-10">
+                                        <button type="submit" class="btn btn-success">Spremi</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="">
+                    <div class="panel-body col-xs-10 col-sm-3 col-md-3">
+                        <span class="filter-blue">Stupac za prikaz kao dijagram i formula</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

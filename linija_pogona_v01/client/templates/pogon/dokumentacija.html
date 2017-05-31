@@ -1,0 +1,10 @@
+{% extends 'linija/base.html' %}
+
+{% load staticfiles %}
+
+{% block title %}Podaci o {{ user.username }}{% endblock %}
+
+{% block body %}
+    <h4>Podaci o {{ user.username }}</h4>
+    <h4>Prikazati kao listu izrađenih naloga tablično preko cijele stranice</h4>
+{% endblock %}
