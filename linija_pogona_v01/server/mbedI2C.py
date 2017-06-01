@@ -17,8 +17,6 @@ pwm_out2=GPIO.PWM(13,50)
 motor_a = 8.0
 motor_b = 7.0
 
-print motor_a, motor_b
-
 def speed_control(speed):
   global motor_a
   global motor_b
@@ -35,11 +33,8 @@ def speed_control(speed):
     value = 9  
     bus.write_byte(address, value)
   
-  print motor_a, motor_b
-
 def motor_control(direction):
-  print direction
-  
+
   global motor_a
   global motor_b
   global pwm_out1
@@ -53,8 +48,6 @@ def motor_control(direction):
     pwm_out2=GPIO.PWM(13,50)
     pwm_out1.start(motor_a)
     pwm_out2.start(motor_b)
-    print motor_a, motor_b
-
  
   if (direction == "bwd"):
     GPIO.setmode(GPIO.BCM)

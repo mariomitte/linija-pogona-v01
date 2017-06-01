@@ -1,28 +1,23 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
+from django.http import HttpResponse
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import redirect, render, get_object_or_404
 from django.template.loader import get_template
 
-from .models import Operater, Pwm
+from .models import Operater, Pwm, camera
 from .forms import OperaterForm, PwmForm
-#from wiPiBotClient import *
+from mbedI2C import *
 
 FORMAT_ZA_SLIKE = ['png', 'jpg', 'jpeg']
 
 def gosti(request):
     return render(request, 'pogon/gosti.html')
 
-def ploca(request):
-    if not request.user.is_authenticated():
-        return render(request, 'pogon/gosti.html')
-    else:
-        return render(request, 'pogon/uprav_ploca.html')
-
 def dokumentacija(request):
     if not request.user.is_authenticated():
-        return render(request, 'pogon/gosti.html')
+        return render(request, 'pogon/login.html')
     else:
         nalog = Operater.objects.filter(kreirao=request.user)
         pwm = Pwm.objects.all()
@@ -92,46 +87,48 @@ def pwm(request):
 
 
 
-'''
+
 # Upravljačka ploča
-def dashboard(request):
+def ploca(request):
     # used to keep track when buttons are pressed twice.
     # you keep in cruise mode
+    if not request.user.is_authenticated():
+        return render(request, 'pogon/login.html')
+    else:
+        t = get_template('pogon/uprav_ploca.html')
 
-    t = get_template('dashboard.html')
+        if 'cmd' in request.GET and request.GET['cmd']:
+            cmd = request.GET['cmd']
 
-    if 'cmd' in request.GET and request.GET['cmd']:
-        cmd = request.GET['cmd']
+            if cmd == 'led':
+                blink()
 
-        if cmd == 'led':
-            blink()
+            # Dodao "pause" da bude enA i enB = 0
+            if (cmd == 'pause'):
+                speed_control(cmd)
 
-        # Dodao "pause" da bude enA i enB = 0
-        if (cmd == 'pause'):
-            speed_control(cmd)
+            if (cmd == 'up') or (cmd == 'down'):
+                speed_control(cmd)
 
-        if (cmd == 'up') or (cmd == 'down'):
-            speed_control(cmd)
+            if cmd == 'record':
+                camera.record()
 
-        if cmd == 'record':
-            camera.record()
+            if cmd == 'stop-record':
+                camera.stop()
 
-        if cmd == 'stop-record':
-            camera.stop()
+            if cmd == 'take-photo':
+                camera.photo()
 
-        if cmd == 'take-photo':
-            camera.photo()
+            if cmd == 'motor-stol':
+                motor_select(cmd)
 
-        if cmd == 'motor-stol':
-            motor_select(cmd)
+            if cmd == 'motor-goredolje':
+                motor_select(cmd)
 
-        if cmd == 'motor-goredolje':
-            motor_select(cmd)
+            if cmd == 'motor-obrada':
+                motor_select(cmd)
 
-        if cmd == 'motor-obrada':
-            motor_select(cmd)
+            motor_control(cmd)
 
-        motor_control(cmd)
+        return HttpResponse(t.render())
 
-    return HttpResponse(t.render())
-'''

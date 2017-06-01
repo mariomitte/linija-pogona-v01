@@ -10,7 +10,8 @@ sudo apt-get -y update
 
 echo "\n"
 echo "Instalacija Python biblioteka\n"
-sudo apt-get install -y build-essential python-dev
+sudo apt-get install -y build-essential python3-dev
+sudo apt-get install -y python3-smbus
 sudo apt-get install -y python3-pip
 sudo apt-get install -y openssh-server
 sudo apt-get install -y python3-rpi.gpio
@@ -19,14 +20,8 @@ sudo apt-get install -y python3-picamera
 echo "sada Django\n"
 sudo pip3 install virtualenv
 echo "\n"
-echo "Direktorij za venv"
-virertualenv myenv
-virtualenv -p /usr/bin/python3 myenv
-source myenv/bin/activate
-echo "\n"
 echo "Instaliraj potrebne biblioteke za rad sa Django-om u venv"
 pip3 install -r requirements.txt
-deactivate
 
 echo "\n"
 echo "Kraj skripte."

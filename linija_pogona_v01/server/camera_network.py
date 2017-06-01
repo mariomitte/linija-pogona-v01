@@ -1,6 +1,7 @@
 import socket
 import time
 import picamera
+from django.conf import settings
 
 class CameraNetwork:
   def __init__(self):
@@ -31,11 +32,10 @@ class CameraNetwork:
     self.camera.start_recording(self.connection, format='h264')
     
   def photo(self):
+    ime = "linija-%s.jpg" % time.strftime("%Y-%m-%d-%H-%M-%S")
     self.camera = picamera.PiCamera()
     self.camera.resolution = (640, 480)
-    filename = "linija-%s.jpg" % time.strftime("%Y-%m-%d-%H-%M-%S")
+    filename = settings.MEDIA_ROOT + '/' + ime
     self.camera.capture(filename)
     self.camera.close()
-    
-    
     

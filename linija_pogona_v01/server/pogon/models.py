@@ -1,8 +1,8 @@
 from django.contrib.auth.models import Permission, User
 from django.db import models
-#from camera_network import *
+from camera_network import *
 
-#camera = CameraNetwork()
+camera = CameraNetwork()
 
 class Operater(models.Model):
     kreirao = models.ForeignKey(User, default=1) # tko je izradio
