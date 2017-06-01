@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.contrib.auth import authenticate, login
-from django.contrib.auth import logout
+from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import redirect, render, get_object_or_404
 from django.template.loader import get_template
 
@@ -25,7 +24,18 @@ def dokumentacija(request):
     if not request.user.is_authenticated():
         return render(request, 'pogon/gosti.html')
     else:
-        return render(request, 'pogon/dokumentacija.html')
+        nalog = Operater.objects.filter(kreirao=request.user)
+        pwm = Pwm.objects.all()
+        context = {
+            'nalog': nalog,
+            'pwm': pwm
+        }
+        return render(request, 'pogon/dokumentacija.html', context)
+
+def detail(request, kreirao_id):
+    operater = get_object_or_404(Operater, pk=kreirao_id)
+    pwm = get_object_or_404(Pwm)
+    return render(request, 'labos/detail.html', {'operater': operater, 'pwm':pwm})
 
 def parametri(request):
     if not request.user.is_authenticated():
@@ -69,6 +79,18 @@ def odjava(request):
         "form": form,
     }
     return render(request, 'pogon/gosti.html', context)
+
+
+def nalog(request):
+    nalog = Operater.objects.filter(kreirao=request.user)
+    return render(request, 'pogon/nalog.html', {'nalog': nalog})
+
+def pwm(request):
+    pwm = Pwm.objects.all()
+    return render(request, 'pogon/pwm.html', {'pwm': pwm})
+
+
+
 
 '''
 # Upravljačka ploča

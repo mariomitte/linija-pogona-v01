@@ -1,0 +1,56 @@
+{% extends 'pogon/base.html' %}
+
+{% block title %}Dokumentacija{% endblock %}
+
+{% block body %}
+    <div class="container-fluid container">
+
+        <div class="row">
+
+            <!-- Left Inventar -->
+            <div class="col-sm-4 col-md-3">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        {% if operater.slika.url %}
+                            <img src="{{ ispitivanje.slika.url }}" width="300" height="138" class="img-responsive center-block" />
+                        {% else %}
+                            <h3>Nema slike za prikaz</h3>
+                        {% endif %}
+                        <h4>{{ operater.nalog }} <small>{{ operater.sifra }}</small></h4>
+                        <h4>{{ operater.kreirao }}</h4>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Roba -->
+            <div class="col-sm-8 col-md-9">
+
+                <div class="panel panel-default">
+                    <div class="panel-body">
+
+                        <div class="table">
+                            <table class="table table-hover">
+                                <thead class="table-default">
+                                    <tr>
+                                        <th>Period</th>
+                                        <th>Širina</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% csrf_token %}
+                                    {% for ulaz in pwm.objects.all() %}
+                                        <tr>
+                                            <td>{{ pwm.period }}</td>
+                                            <td>{{ pwm.sirina }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+{% endblock %}

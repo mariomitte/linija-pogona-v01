@@ -1,10 +1,62 @@
 {% extends 'pogon/base.html' %}
-
-{% load staticfiles %}
-
-{% block title %}Podaci o {{ user.username }}{% endblock %}
-
+{% block title%}Dokumentacija{% endblock %}
 {% block body %}
-    <h4>Podaci o {{ user.username }}</h4>
-    <h4>Prikazati kao listu izrađenih naloga tablično preko cijele stranice</h4>
+{% if nalog %}
+<div class="col-md-9 col-md-offset-1">
+  <h4>Radni nalog</h4>
+</div>
+<div class="col-md-9 col-md-offset-1">
+    <div class="table">
+        <table class="table table-hover">
+            <thead class="table-default">
+                <tr>
+                    <th>Nalog</th>
+                    <th>Kreirao</th>
+                    <th>Šifra</th>
+                    <th>Slika</th>
+                    <th>Važno</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for ispitivanje in nalog %}
+                {% csrf_token %}
+                <tr>
+                    <td>{{ ispitivanje.nalog }}</td>
+                    <td>{{ ispitivanje.kreirao }}</td>
+                    <td>{{ ispitivanje.sifra }}</td>
+                    <td>{{ ispitivanje.slika }}</td>
+                    <td>{{ ispitivanje.is_star }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endif %}
+{% if pwm %}
+<div class="col-md-9 col-md-offset-1">
+  <h4>PWM modulacija</h4>
+</div>
+<div class="col-md-9 col-md-offset-1">
+    <div class="table">
+        <table class="table table-hover">
+            <thead class="table-default">
+                <tr>
+                    <th>Period</th>
+                    <th>Širina</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for ispitivanje in pwm %}
+                {% csrf_token %}
+                <tr>
+                    <td>{{ ispitivanje.period }}</td>
+                    <td>{{ ispitivanje.sirina }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endif %}
 {% endblock %}
