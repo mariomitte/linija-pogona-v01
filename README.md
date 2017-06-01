@@ -1,20 +1,20 @@
 # Linija pogona
 
-# Ovim koracima sam išao do završnog proizvoda
-HTML/CSS izrada korisničkog sučelja
-REST API login za korisnika linije
-RPi server na kojemu je instaliran
-Web kamera za učitavanje radnog naloga
-mbed i RPi komunikacija pomoću I2C
+# Koraci do konačnog projekta
+- HTML/CSS izrada korisničkog sučelja
+- REST API login za korisnika linije
+- RPi server na kojemu je instaliran
+- Web kamera za učitavanje radnog naloga
+- mbed i RPi komunikacija pomoću I2C
 
 # Upute za RPi model 3
 1. Debian Linux, RASPBIAN JESSIE LITE
-   1.1 Instalacija na sdcard, min 8GB
+   - Instalacija na sdcard, min 8GB
        unzip -p 2017-04-10-raspbian-jessie.zip | sudo dd of=/dev/sdX bs=4096 status=progress
-   1.2 Spoji se na RPi sa PC preko HDMI i tipkovnice ili UTP kabelom
+   - Spoji se na RPi sa PC preko HDMI i tipkovnice ili UTP kabelom
 2. Podesiti na headless
-   2.1 Postavi na sdcard datoteku ssh za spajanje sa RPi UTP kabelom
-   2.2 Opcija sa HDMI i tipkovnicom je jednostavnija i potrebno je samo jednom napraviti
+   - Postavi na sdcard datoteku ssh za spajanje sa RPi UTP kabelom
+   - Opcija sa HDMI i tipkovnicom je jednostavnija i potrebno je samo jednom napraviti
        - u RPi je potrebno unijeti sdcard sa raspbian OS
        - login podaci: username:pi, password:raspberry(pazi na US-keyboard)
        - sudo raspi-config(1.proširi sdcard na maxsize, 2. promijeni lozinku, 3.uključi kameru, ssh, I2C)
@@ -24,7 +24,7 @@ mbed i RPi komunikacija pomoću I2C
               psk="PASSWORD"
             }
        - sudo reboot
-   2.3 Spoji se sa RPi preko WIFI
+   - Spoji se sa RPi preko WIFI
        - ssh pi@raspberrypi
 3. Pokreni skriptu za instalaciju
    - preuzmi datoteku "linija-pogona-vX" sa "https://github.com/mariomitte/"
@@ -49,9 +49,10 @@ koristiti opciju iz "File/Mrežne veze" gdje se unosi "Mrežni URL"
 # Upute za Django
 1. source myenv/bin/activate
 2. cd workspace/linija-pogona-vX/linija_pogona_vX/
-3. python server/manage.py makemigrations pogon
-   python server/manage.py makemigrations api
-   python server/manage.py migrate
-   python server/manage.py createsuperuser
-   python server/manage.py runserver 0.0.0.0:8000
+3. migracije za bazu podataka i izradu administratorskog racuna
+   - python server/manage.py makemigrations pogon
+   - python server/manage.py makemigrations api
+   - python server/manage.py migrate
+   - python server/manage.py createsuperuser
+   - python server/manage.py runserver 0.0.0.0:8000
 4. otvori u browseru na "localhost:8000" ili "IP.adresa"
