@@ -1,0 +1,6 @@
+Django
+django-bootstrap3
+django-chartjs
+django-inline-svg
+django-pyowm
+djangorestframework

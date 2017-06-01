@@ -17,10 +17,10 @@
 </head>
 <body>
 {% include "pogon/navbar.html" %}
+{% if error_message %}
 <div class="row">
-  {% if error_message %}
-      <p><strong>{{ error_message }}</strong></p>
-  {% endif %}
+    <p><strong>{{ error_message }}</strong></p>
+{% endif %}
 </div>
 {% block body %}
 {% endblock %}
