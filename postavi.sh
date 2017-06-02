@@ -21,7 +21,7 @@ echo "sada Django\n"
 sudo pip3 install virtualenv
 echo "\n"
 echo "Instaliraj potrebne biblioteke za rad sa Django-om u venv"
-pip3 install -r requirements.txt
+sudo pip3 install -r requirements.txt
 
 echo "\n"
 echo "Kraj skripte."
